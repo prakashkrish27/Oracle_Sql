@@ -1,0 +1,45 @@
+create table cricket(ball_cnt integer , run varchar2(100));
+
+insert into cricket values(1,4);
+insert into cricket values(2,0);
+insert into cricket values(3,2);
+insert into cricket values(4,1);
+insert into cricket values(5,4);
+insert into cricket values(6,3);
+insert into cricket values(7,6);
+insert into cricket values(8,4);
+insert into cricket values(9,4);
+insert into cricket values(10,0);
+insert into cricket values(11,0);
+insert into cricket values(12,0);
+insert into cricket values(13,6);
+
+select per_over, sum(run) total_run_per_over from
+(select over_rate||'-over' as per_over, run from
+(select ceil(ball_cnt/6) over_rate,run from cricket))
+group by per_over
+order by 1;
+
+
+CREATE TABLE cri ( Balls, Runs ) AS
+  SELECT 1,     6 FROM DUAL UNION ALL
+  SELECT 2,     0 FROM DUAL UNION ALL
+  SELECT 3,     1 FROM DUAL UNION ALL
+  SELECT 4,     3 FROM DUAL UNION ALL
+  SELECT 5,     2 FROM DUAL UNION ALL
+  SELECT 6,     1 FROM DUAL UNION ALL
+  SELECT 1,     0 FROM DUAL UNION ALL
+  SELECT 2,     2 FROM DUAL UNION ALL
+  SELECT 3,     6 FROM DUAL UNION ALL
+  SELECT 4,     1 FROM DUAL UNION ALL
+  SELECT 5,     4 FROM DUAL UNION ALL
+  SELECT 6,     1 FROM DUAL;
+  
+  SELECT overs,
+       SUM( runs ) AS runs
+FROM   (
+ 
+  select c.*,row_number() over(partition by Balls order by rownum) as overs from cri c
+
+)
+GROUP BY overs

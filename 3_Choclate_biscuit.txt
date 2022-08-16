@@ -1,0 +1,39 @@
+-- Write a SQL query to populate the sql values to the last not null values
+
+create table brands 
+(
+category varchar(20),
+brand_name varchar(20)
+);
+
+insert into brands values('chocolates','5-star');
+insert into brands values(null,'dairy milk');
+insert into brands values(null,'perk');
+insert into brands values(null,'eclair');
+insert into brands values('Biscuits','britannia');
+insert into brands values(null,'good day');
+insert into brands values(null,'boost');
+
+with src as
+(
+select category,brand_name,
+row_number() over(order by null)row_num
+from brands
+),
+sub_src as
+(
+select a.*, lead(a.row_num,1,9999)over(order by a.row_num)next_row_num from src a
+where a.category is not null
+)
+select * from sub_src
+
+select sub_src.category, src.brand_name
+from src inner join sub_src on src.row_num >= sub_src.row_num and src.row_num <= (sub_src.next_row_num) -1;
+
+select nvl(category,lag(category) ignore nulls over(order by null)) category,brand_name
+from brands ;
+
+
+
+/*the IGNORE NULLS clause affects the output. All rows (except the first) contain non-NULL values even if the preceding row contained NULL. 
+If the preceding row contained NULL, then the current row uses the most recent non-NULL value. */

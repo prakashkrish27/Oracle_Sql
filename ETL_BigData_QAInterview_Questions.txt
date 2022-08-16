@@ -1,0 +1,154 @@
+Datawarehosuing:
+----------------
+semi additive fact 		-->  NA	
+role playing dimension 	-->  NA
+factless fact 			-->  
+star/Snowflake 			-->  
+SCD 2 & SCD 3 			-->  
+Surrogate key 			-->  NA
+Dim & fact				-->  
+Type of dimension		-->  
+Type of Fact			-->  
+Change data capture 	-->  
+Galaxy Schema			-->  NA
+
+oracle sql:
+------------
+
+join count : Inner join --> 4 , LJ --> 4 , RJ --> 16 , FJ --> 4, CJ --> 24  (NA)
+
+2nd Highest salary for each department   --> (NA)
+
+Query to display employee count per year --> (NA)
+
+Dual --> Not answered
+
+Customer Names --> Not answered
+
+last day --> Answered
+
+Minus validation --> NA
+
+NVL / NVL2 -->  Answered
+
+In / Exists -->  Not Answered
+
+Sub query / Correlated Query --> Aswered
+
+Analytical --> Not Answered
+
+SQL> SELECT X FROM SO;
+
+Table_Name : Sample
+
+X
+--------------------
+12c
+123
+abc
+a12
+
+SELECT X  FROM SO WHERE REGEXP_LIKE(X, '^[[:digit:]]+$');
+
+SELECT * FROM mytable WHERE REGEXP_LIKE(column_1, '[^A-Za-z]')
+
+select * from (select ename,job, ROWNUM AS rn from emp) where mod(rn, 2) = 0;
+
+select * from (select ename,job, ROWNUM AS rn from emp) where mod(rn, 2) <> 0;
+
+display the employee records whose name starts and end with same char?
+
+table name : customer
+
+Email
+------
+
+2027471
+
+xyz@gmail.com
+abzggg@gmail.com
+
+from the above email addresses display only the first part?
+
+table name : customer
+
+CNAME
+------
+
+Rahul Dravid
+Virendra Shewag
+Sachin Ramesh Tendulkar
+Sourvan Ganguly
+Mahindra Singh Dhoni
+
+From the above customer names display only those names that contains more than 2 parts?
+
+Table : Employee
+
+ENAME   HIREDATE
+SMITH	17-DEC-99
+JAMES	21-MAY-90
+WARD	22-FEB-81
+
+I want to generate a list of user IDs as follows
+
+USERID
+Smi17DEC99
+Jam21MAY90
+War22FEB81
+
+Display the employee records joined in first 15 days in the month APR,DEC in the year between 1980 and 1987?
+
+display employee recods whose name contains exactly one 'A'?
+
+select * from emp
+where length(ename) - length(replace(ename,'A',''))=1
+
+
+Query to schedule a match between each team
+
+ Team
+    ----
+    India
+    Pakistan
+    Srilanka
+    Australia
+
+
+    Output :
+    ----
+    India VS Pakistan
+    India VS Srilanka
+    India VS Australia
+    Pakistan VS Srilanka
+    Pakistan VS Australia
+    Srilanka VS Australia
+	
+	select 
+       a.team_name || 'VS' || b.team_name
+from   
+table_team a,  
+table_team b
+where 
+       a.team_id < b.team_id ;
+
+
+select * from orders order by 1,2;
+
+select order_id,status_date,status,
+  lag(status,1) over (partition by order_id order by status_date) lag_status
+from ORDERS
+order by 1,2;
+
+select order_id,status_date,status,
+  lead(status,1) over (partition by order_id order by status_date) lag_status
+from ORDERS
+order by 1,2;
+
+Hive:
+-----
+
+Static/Dynamic - Not Answered
+Parquet/Avro   - Not Answered
+Ineternal/ Extrenal - Not Answered 
+Row into column - Not Answered
