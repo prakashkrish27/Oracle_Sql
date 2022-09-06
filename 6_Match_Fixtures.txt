@@ -1,0 +1,62 @@
+select 
+substr(cast(A.ITEM_ATRS_LIST as varchar2(4000)),instr(cast(A.ITEM_ATRS_LIST as varchar2(4000)),'BouquetID',1),instr(substr(cast(A.ITEM_ATRS_LIST as varchar2(4000)),instr(cast(A.ITEM_ATRS_LIST as varchar2(4000)),'BouquetID',1)),';',1)-1)
+from tbap_item A where A.MAIN_ITEM_ID in('2279250593') and A.SERVICE_TYPE in('SMC') and STATE='AS' and STATUS='AC';
+
+
+with src as
+(
+select 1 as id from dual
+union all
+select 2 from dual
+union all
+select 3 from dual
+),
+src2 as
+(
+select 1 as id from dual
+union all
+select 1 as id from dual
+union all
+select 1 as id from dual
+union all
+select 1 as id from dual
+union all
+select 2 as id from dual
+union all
+select 2 as id from dual
+union all
+select 2 as id from dual
+union all
+select 2 as id from dual
+union all
+select 3 from dual
+union all
+select 3 from dual
+union all
+select 3 from dual
+union all
+select 3 from dual
+)
+select count(*) from src natural join src2   -- Inner join 12  ; Left join 12 ; Right join 12 ; Full join 12 ; cartesian join 36 ; Natural 12 
+
+
+with teams as
+(
+select 'India' name  UNION ALL
+select 'Pakistan' name UNION ALL
+select 'Srilanka' name UNION ALL
+select 'Australia' name 
+)
+select concat(t1.name,' VS ',t2.name)
+from teams t1, teams t2
+where t1.name < t2.name;
+
+Australia VS India
+India VS Pakistan
+Australia VS Pakistan
+India VS Srilanka
+Australia VS Srilanka
+Pakistan VS Srilanka
+
+select * from ISOM_DATA where rowid in
+(select decode(mod(rownum,2),0,null,rowid) from ISOM_DATA)

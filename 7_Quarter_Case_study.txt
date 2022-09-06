@@ -1,0 +1,23 @@
+CREATE TABLE STORES (
+Store varchar(10),
+Quarter varchar(10),
+Amount int);
+
+INSERT INTO STORES VALUES ('S1', 'Q1', 200);
+INSERT INTO STORES VALUES ('S1', 'Q2', 300);
+INSERT INTO STORES VALUES ('S1', 'Q4', 400);
+INSERT INTO STORES VALUES ('S2', 'Q1', 500);
+INSERT INTO STORES VALUES ('S2', 'Q3', 600);
+INSERT INTO STORES VALUES ('S2', 'Q4', 700);
+INSERT INTO STORES VALUES ('S3', 'Q1', 800);
+INSERT INTO STORES VALUES ('S3', 'Q2', 750);
+INSERT INTO STORES VALUES ('S3', 'Q3', 900);
+
+
+select distinct a.store,'Q'||level as QUARTER from dual, stores a
+connect by level <=4
+
+minus
+
+select store,Quarter from stores;
+

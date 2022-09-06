@@ -1,0 +1,42 @@
+/** This Activity Table shows App purchased and App installed Activities for Spotify APP Along with country details **/
+
+CREATE table activity
+(
+user_id varchar(20),
+event_name varchar(20),
+event_date date,
+country varchar(20)
+);
+
+insert into activity values (1,'app-installed','01-JAN-22','India');
+insert into activity values(1,'app-purchase','02-JAN-22','India');
+insert into activity values(2,'app-installed','01-JAN-22','USA');
+insert into activity values(3,'app-installed','01-JAN-22','USA');
+insert into activity values(3,'app-purchase','03-JAN-22','USA');
+insert into activity values(4,'app-installed','03-JAN-22','India');
+insert into activity values(4,'app-purchase','03-JAN-22','India');
+insert into activity values(5,'app-installed','03-JAN-22','SL');
+insert into activity values(5,'app-purchase','03-JAN-22','SL');
+insert into activity values(6,'app-installed','04-JAN-22','Pakistan');
+insert into activity values(6,'app-purchase','04-JAN-22','Pakistan');
+
+select * from activity;
+
+/* Question 1 : Find Total Active users Each day */
+
+select event_date,count(distinct user_id) from activity
+group by event_date
+order by event_date
+
+/* Question 2 : Find Total Active users Each Week */
+
+select TO_CHAR(event_date, 'IW'),count(distinct user_id) from activity 
+group by TO_CHAR(event_date, 'IW');
+
+/* Question 3 : Date-wise total number of users who made the purchase same day they installed the APP  */
+
+select event_date,count(New_user) from
+(select event_date,user_id,case when count(distinct event_name) ='2' then count(distinct user_id) else null end as New_user from activity
+group by event_date,user_id
+order by event_date)
+group by event_date;

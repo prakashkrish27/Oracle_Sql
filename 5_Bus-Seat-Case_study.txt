@@ -1,0 +1,30 @@
+create table bms (seat_no int ,is_empty varchar(10));
+insert into bms values (1,'N');
+insert into bms values (2,'Y');
+insert into bms values (3,'N');
+insert into bms values (4,'Y');
+insert into bms values (5,'Y');
+insert into bms values (6,'Y');
+insert into bms values (7,'N');
+insert into bms values (8,'Y');
+insert into bms values (9,'Y');
+insert into bms values (10,'Y');
+insert into bms values (11,'Y');
+insert into bms values (12,'N');
+insert into bms values (13,'Y');
+insert into bms values (14,'Y');
+
+with src as
+(
+select seat_no , is_empty as current_seat, 
+lag(is_empty,1) over(order by seat_no) as prev_1 ,
+lag(is_empty,2) over(order by seat_no) as prev_2,
+lead(is_empty,1) over(order by seat_no) as next_1 ,
+lead(is_empty,2) over(order by seat_no) as next_2
+from bms
+)
+select seat_no,current_seat from src
+where current_seat = 'Y' and next_1 = 'Y' and next_2 = 'Y'
+or current_seat = 'Y' and prev_1 = 'Y' and Next_1 = 'Y'
+or current_seat = 'Y' and prev_1 = 'Y' and prev_2 = 'Y'
+

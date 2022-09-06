@@ -1,0 +1,63 @@
+================================== JOIN COUNT QUERY ============================
+
+with src as 
+(
+select '1' as id from dual
+union all
+select '2' as id from dual
+union all
+select '3' as id from dual
+),
+TGT as 
+(
+select '1' as id from dual
+union all
+select '1' as id from dual
+union all
+select '1' as id from dual
+union all
+select '1' as id from dual
+union all
+select '2' as id from dual
+union all
+select '2' as id from dual
+union all
+select '2' as id from dual
+union all
+select '2' as id from dual
+union all
+select '3' as id from dual
+union all
+select '3' as id from dual
+union all
+select '3' as id from dual
+union all
+select '3' as id from dual
+)
+select count(src.id) from src
+join TGT on src.id = TGT.id; --    Inner join count = 12 ; Left join count = 12 ; Right join count = 12 ; full join count = 12
+
+=========================================Delete Rows with Partition by================================================
+
+with src as
+(
+select '1' as id, 'Raja' as Name from dual
+union all
+select '1', 'Raja' from dual
+union all
+select '1', 'Raja' from dual
+union all
+select '2','Rama' from dual
+)
+delete from ff
+from 
+(
+select id,Name,row_number()over(partition by id,name order by id,name)R_NUM from src)ff
+where ff.R_NUM > 1;
+
+========================================= ODD Number or Even Number Records ============================================
+
+select * from 
+(select subscriber_no,subscriber_type,rownum rn from subscriber
+order by subscriber_no)
+where mod(rn,2) = 0;

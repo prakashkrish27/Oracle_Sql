@@ -1,0 +1,28 @@
+create table temp(id int, dd date, temp int)
+
+insert into temp values (1,'01-Apr-22',10);
+
+insert into temp values (2,'02-Apr-22',30);
+
+insert into temp values (3,'03-Apr-22',20);
+
+insert into temp values (4,'04-Apr-22',25);
+
+select * from temp
+order by 1
+
+with src as
+(
+select id, dd, 
+lead(dd,1)over(order by dd) as next_day ,
+temp,lead(temp,1)over(order by dd) as next_temp
+from temp
+order by 1
+)
+
+select id from
+(select id,dd,next_day,temp,next_temp,temp-next_temp as new_temp
+from
+(select id,dd,nvl(next_day,dd) next_day,temp,nvl(next_temp,temp)next_temp
+from src))
+where new_temp >= 0
