@@ -1,0 +1,20 @@
+create table airbnb
+(
+user_id int,
+date_searched date,
+filter_room_types varchar(200)
+);
+
+insert into airbnb values (1,'01-JAN-22','entire home,private room');
+insert into airbnb values(2,'02-JAN-22','entire home,shared room');
+insert into airbnb values(3,'02-JAN-22','private room,shared room');
+insert into airbnb values(4,'03-JAN-22','private room');
+
+with src as 
+(select distinct user_id,REGEXP_SUBSTR(filter_room_types ,'[^,]+', 1, level) room_typ 
+from airbnb
+CONNECT BY level <= regexp_count(filter_room_types,',')+1
+order by 1
+)
+select room_typ,count(*) from src
+group by room_typ;

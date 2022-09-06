@@ -1,0 +1,31 @@
+Hi Ankit 
+
+Can you help me with this I was not able to answer in the interview 😕😟
+
+Input 
+N    P
+1.    2
+3.    2
+6.    8
+9.    8
+2.    5
+8.    5
+5.    Null
+
+
+Output 
+N.   P
+1.    Leaf
+2.    Inner
+3.    Leaf
+5.    Root 
+6.    Leaf
+8.    Inner
+9.    Leaf
+
+select
+n,
+CASE when parent is null then 'Root'
+when parent is not null and node in ( select distinct parent from input) then 'Inner'
+else 'leaf' end as label
+from input

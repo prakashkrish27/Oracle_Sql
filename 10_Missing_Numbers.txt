@@ -1,0 +1,27 @@
+create table tab1 (id int);
+
+create table tab2 (id int);
+
+insert into tab1 values (1);
+insert into tab1 values (3);
+insert into tab1 values (5);
+insert into tab1 values (7);
+
+insert into tab2 values (2);
+insert into tab2 values (9);
+insert into tab2 values (10);
+
+with src as
+(
+select id from tab1
+union
+select id from tab2
+),
+main_src as
+(
+select min(id)mi_id,max(id)mx_id from src
+)
+select (MI_id-1)+level as id from main_src
+connect by level <=mx_id
+minus
+select id from src;

@@ -1,0 +1,24 @@
+create table oms (order_id int, customer_id int, order_date date, order_amount int);
+
+insert into  oms values (1,100,'01-JAN-22',2000);
+insert into  oms values (2,200,'01-JAN-22',2500);
+insert into  oms values (3,300,'01-JAN-22',2100);
+insert into  oms values (4,100,'02-JAN-22',2000);
+insert into  oms values (5,400,'02-JAN-22',2000);
+insert into  oms values (6,500,'02-JAN-22',2700);
+insert into  oms values (7,100,'03-JAN-22',3000);
+insert into  oms values (8,400,'03-JAN-22',1000);
+insert into  oms values (9,600,'03-JAN-22',3000);
+
+select order_date,
+sum(case when rank_check = 1 then 1 else 0 end) as New_Customers,
+sum (case when rank_check > 1 then 1 else 0 end) as repeated_customers
+from
+(select order_date,customer_id,row_number() over(partition by customer_id order by order_date)rank_check from oms)
+group by  order_date
+order by 1
+
+
+
+
+
