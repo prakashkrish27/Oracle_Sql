@@ -1,0 +1,30 @@
+CREATE TABLE emp_salary
+(
+    emp_id int,
+    name varchar(20) ,
+    salary varchar(30),
+    dept_id int
+);
+
+
+INSERT INTO emp_salary VALUES(101, 'sohan', '3000', '11');
+INSERT INTO emp_salary VALUES(102, 'rohan', '4000', '12');
+INSERT INTO emp_salary VALUES(103, 'mohan', '5000', '13');
+INSERT INTO emp_salary VALUES(104, 'cat', '3000', '11');
+INSERT INTO emp_salary VALUES(105, 'suresh', '4000', '12');
+INSERT INTO emp_salary VALUES(109, 'mahesh', '7000', '12');
+INSERT INTO emp_salary VALUES(108, 'kamal', '8000', '11');
+
+with src as
+(
+select EMP_ID,NAME,SALARY,DEPT_ID,dense_rank()over(partition by dept_id order by salary desc)r_num
+from emp_salary 
+order by dept_id
+)
+select EMP_ID,NAME,SALARY,DEPT_ID from src
+where dept_id||R_NUM in 
+(select dept_id||R_NUM from
+(select dept_id,R_NUM,count(*)
+from src
+group by dept_id,R_NUM
+having count(*)>1))
