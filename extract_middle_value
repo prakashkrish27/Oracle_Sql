@@ -1,0 +1,15 @@
+create table employee (email varchar(50));
+
+insert into employee values ('www.ttt.com');
+insert into employee values ('www.123.edu');
+insert into employee values ('www.tnstc.in');
+insert into employee values ('www.mm.co');
+insert into employee values ('yyyy.fff.com');
+insert into employee values ('yyyyyyyyyyyyyy.hhhh.com')
+insert into employee values ('a.b.c')
+
+
+select * from employee;
+
+Select email,substr (email,Instr(email,'.',1)+1, (instr(email,'.',1,2)-1 - Instr(email,'.',1,1)))
+from employee;
