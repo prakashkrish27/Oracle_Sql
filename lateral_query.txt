@@ -1,0 +1,12 @@
+create table orders
+(
+orderid varchar(5),
+item varchar(5),
+qty int
+);
+insert into orders values ('O1','A1', '5');
+insert into orders values ('O2','A2','1') ;
+insert into orders values ('O3','A3', '3');
+
+select t.orderid,t.item, 1 qty from orders t, lateral (
+select level from dual connect by level <= t.qty);
