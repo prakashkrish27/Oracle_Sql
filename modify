@@ -1,0 +1,30 @@
+--Write an SQL query to fetch the records which have atleast one yellow present in any of the columns(c1,c2 or c3) without using 'OR' operator.
+
+create table practice(id int,c1 varchar(50),c2 varchar(50),c3 varchar(50));
+insert into practice values(1,'red','yellow','blue');
+insert into practice values(2,null,'red','green');
+insert into practice values(3,'yellow',null,'violet');
+
+select * from practice where c1||c2||c3 like '%yell%';
+
+--Solve swap adjacent seat query in SQL
+
+create table student (id int, name varchar(20));
+
+insert into student values (1,'A');
+insert into student values (2,'B');
+insert into student values (3,'C');
+insert into student values (4,'D');
+insert into student values (5,'E');
+
+with src as
+(
+select id,name,
+lag(name,1)over(order by id)Lag_1,
+lead(name,1)over(order by id)Lead_1
+from student
+)
+select id,
+case when mod(id,1) <> 0 then Lead_1
+else Lag_1 end as name 
+from src
