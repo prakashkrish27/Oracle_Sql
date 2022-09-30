@@ -24,7 +24,8 @@ lag(name,1)over(order by id)Lag_1,
 lead(name,1)over(order by id)Lead_1
 from student
 )
-select id,
-case when mod(id,1) <> 0 then Lead_1
-else Lag_1 end as name 
-from src
+select id, name,nvl(name_1,name) as swap_value from
+(select id, Name,
+case when mod(id,2) <> 0 then Lead_1
+else Lag_1 end as name_1
+from src)
