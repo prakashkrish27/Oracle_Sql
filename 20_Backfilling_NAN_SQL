@@ -1,0 +1,26 @@
+CREATE TABLE swap_null
+(
+val int
+)
+insert into swap_null values(10);
+insert into swap_null values(2);
+insert into swap_null values(2);
+insert into swap_null values(null);
+insert into swap_null values(100);
+insert into swap_null values(null);
+insert into swap_null values(500);
+insert into swap_null values(null);
+
+select * from swap_null
+
+with src as
+(
+select 
+lag(val,1)over(order by rownum) as Lag_1,
+val,
+lead(val,1)over(order by rownum) as Lead_1
+from swap_null
+)
+select val,
+case when val is null then Lag_1 else val end as swap_values
+from src
