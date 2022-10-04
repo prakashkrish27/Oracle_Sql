@@ -1,0 +1,10 @@
+create table customer (name varchar2(40));
+
+insert into customer values ('David');
+insert into customer values ('Ramana');
+insert into customer values ('Anirudh');
+insert into customer values ('Rajesh');
+insert into customer values ('Anitha');
+
+select * from customer
+where (length(lower(name)) - length(replace(lower(name),'a','')) = 1);
