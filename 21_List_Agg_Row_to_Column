@@ -16,3 +16,13 @@ from emp
 group by deptno;
 
 -- Within group is not mandataory when we use oracle 19c. But older version it is required.
+
+create table emp_dtl(deptno int, name varchar2(50));
+
+insert into emp_dtl values (10,'Raja,Ravi,Anandh');
+insert into emp_dtl values (20,'Raghu,Sriram');
+insert into emp_dtl values (30,'James');
+
+select deptno, name , regexp_count(name,',')+1,
+regexp_substr(name,'\w+',1,l)
+from emp_dtl,lateral(select level l from dual connect by level <= regexp_count(name,',')+1);
