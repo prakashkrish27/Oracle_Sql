@@ -1,0 +1,18 @@
+-- Convert Comma separated values ---
+
+create table emp(deptno int, name varchar2(50));
+
+insert into emp values (10,'Raja');
+insert into emp values (10,'Ravi');
+insert into emp values (10,'Anandh');
+insert into emp values (20,'Raghu');
+insert into emp values (20,'Sriram');
+insert into emp values (30,'James');
+
+select * from emp;
+
+select deptno,listagg(name,',') within group (order by name desc)
+from emp
+group by deptno;
+
+-- Within group is not mandataory when we use oracle 19c. But older version it is required.
