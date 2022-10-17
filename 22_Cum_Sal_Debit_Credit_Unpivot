@@ -44,3 +44,28 @@ from deb_cre
 
 ***************************** UN-PIVOT ************************************************
 
+create table phone (name varchar(20),Home_phone varchar(20),Mobile_phone varchar(20),Work_phone varchar(20));
+
+insert into phone values ('Prakash','9600422423','7373747479',null);
+insert into phone values ('Chitra','9042790427','8825486486','8056764321');
+insert into phone values ('Ruthvik',null,'9976205360',null);
+
+--Method 1
+
+with src as
+(
+select Name,'Home_phone', Home_phone as  Contact from phone
+union all
+select Name, 'Mobile_phone',Mobile_phone as Contact  from phone
+union all
+select Name, 'Work_phone',Work_phone as contact from phone
+)
+select * from src
+where contact is not null
+order by 1
+
+--Method 2
+select * from
+(select * from phone)unpivot(Contact for number_type in (Home_phone as 'Home_phone',
+                                                         Mobile_phone as 'Mobile_phone',
+                                                         Work_phone as 'Work_phone'))
