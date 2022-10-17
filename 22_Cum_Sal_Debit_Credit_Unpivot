@@ -1,0 +1,46 @@
+******************************* CUM_SAL **************************************
+create table emp(id int,name varchar(20),Months int, salary int)
+
+insert into emp values (1,'AA',1,1500);
+insert into emp values (2,'BB',1,1500);
+insert into emp values (3,'CC',1,1500);
+insert into emp values (1,'AA',2,2500);
+insert into emp values (2,'BB',2,3500);
+insert into emp values (3,'CC',2,1700);
+insert into emp values (1,'AA',3,4500);
+insert into emp values (2,'BB',3,7500);
+insert into emp values (3,'CC',3,2700);
+insert into emp values (1,'AA',4,9500);
+insert into emp values (2,'BB',4,8500);
+insert into emp values (3,'CC',4,4700);
+
+select id,Name,Months,sum(salary)over(partition by id,name order by salary) from emp;
+
+******************************* DEBIT_CREDIT **************************************
+
+create table deb_cre(id int, type char(1),amount int);
+
+insert into deb_cre values (1,'C',10000);
+insert into deb_cre values (2,'D',2000);
+insert into deb_cre values (3,'C',8000);
+insert into deb_cre values (4,'D',5200);
+insert into deb_cre values (5,'D',1700);
+
+--Method 1
+
+select id,amount,NVL(OPEN_BALANCE,amount)Cum_amnt from
+(select id,amount,
+sum(decode(type,'C',amount))over(order by id) debit, 
+sum(decode(type,'D',amount))over(order by id) credit,
+sum(decode(type,'C',amount))over(order by id) - sum(decode(type,'D',amount))over(order by id) as Open_balance
+from deb_cre);
+
+--Method 2
+
+
+select id,amount, sum(decode(type,'C',amount,'D',amount*-1)) over(order by id) as cum_amount
+from deb_cre
+
+
+***************************** UN-PIVOT ************************************************
+
