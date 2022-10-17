@@ -1,0 +1,19 @@
+create table seg(name varchar(100));
+
+insert into seg values('Prakash');
+insert into seg values('1');
+insert into seg values('-100');
+insert into seg values('Anandh');
+insert into seg values('Raja');
+insert into seg values('Ravi');
+insert into seg values('raghu');
+
+select case when ext_name is not null then name end as Ext_Name,
+case when ext_num is not null then name end as Ext_Number
+from
+(
+select name,
+regexp_substr(name, '[0-9]')ext_num,
+regexp_substr(name, '[A-Z a-z]')ext_name
+from seg
+)
