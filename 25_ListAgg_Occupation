@@ -1,0 +1,17 @@
+create table occupations
+( name varchar(20),
+occupation varchar(20));
+
+insert into occupations values('Ashley','Professor');
+insert into occupations values('Samantha','Actor');
+insert into occupations values('Julia','Doctor');
+insert into occupations values('Britney','Professor');
+insert into occupations values('Maria','Professor');
+insert into occupations values('Meera','Professor');
+insert into occupations values('Priya','Doctor');
+insert into occupations values('Priyanka','Professor');
+insert into occupations values('Jennifer','Actor');
+insert into occupations values('Ketty','Actor');
+insert into occupations values('Jane','Singer');
+insert into occupations values('Jenny','Singer');
+insert into occupations values('Kristeen','Singer');
