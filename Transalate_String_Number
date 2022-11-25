@@ -1,0 +1,14 @@
+create table chrext (str varchar2(100));
+
+insert into chrext values ('12ABCD3453');
+
+insert into chrext values ('AC3948390');
+
+insert into chrext values ('J3539580H');
+
+insert into chrext values ('1HIKSI9A43');
+
+select str,
+REPLACE(TRANSLATE(str,'ABCDEFGHIJKLMNOPQRSTUVWXYZ',' '),' ',''),
+REPLACE(TRANSLATE(str,'1234567890',' '),' ','') AS CHARACTERS
+from chrext
