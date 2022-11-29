@@ -1,0 +1,20 @@
+create table airport(source varchar2(100),destination varchar2(100));
+
+insert into airport values ('Delhi','Bangalore');
+insert into airport values ('Bangalore','Hyderabad');
+insert into airport values ('Chennai','Delhi');
+insert into airport values ('Delhi','Chennai');
+insert into airport values ('Delhi','Mumbai');
+insert into airport values ('Mumbai','Bangalore');
+insert into airport values ('Bangalore','Chennai');
+insert into airport values ('Delhi','Lucknow');
+insert into airport values ('Lucknow','Delhi');
+insert into airport values ('Mumbai','Delhi');
+insert into airport values ('Hyderabad','Bangalore');
+insert into airport values ('Delhi','Chennai');
+
+select distinct source,destination from airport
+order by 1;
+
+select level lvl, substr('oracle',level,1)str from dual
+connect by level <= length('oracle');
