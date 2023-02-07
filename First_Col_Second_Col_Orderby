@@ -1,0 +1,23 @@
+create table data_sample (first_col int, Second_col int);
+
+insert into data_sample values(4,2);
+
+insert into data_sample values(2,3);
+
+insert into data_sample values(3,1);
+
+insert into data_sample values(1,4);
+
+select * from data_sample;
+
+with fc as
+(
+    select FIRST_COL,row_number()over(order by FIRST_COL) as rn from data_sample
+),
+sc as
+(
+
+    select Second_col,row_number()over(order by Second_col desc) as rn1 from data_sample
+)
+
+select fc.FIRST_COL,sc.Second_col from fc join sc on fc.rn = sc.rn1
